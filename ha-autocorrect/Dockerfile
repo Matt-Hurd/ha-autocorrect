@@ -13,7 +13,7 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-RUN --mount=type=cache,target=/root/.cache pip install -r requirements.txt
+RUN --mount=type=cache,target=/root/.cache pip install --break-system-packages -r requirements.txt
 
 COPY rootfs /
 
