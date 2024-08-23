@@ -17,5 +17,5 @@ options:
   typesense_host: 127.0.0.1
   typesense_port: 8108
 schema:
-  typesense_host: string
-  typesense_port: integer
+  typesense_host: str
+  typesense_port: int
