@@ -1,0 +1,11 @@
+---
+channel: stable
+addons:
+  autocorrect:
+    repository: matt-hurd/ha-autocorrect
+    target: autocorrect
+    image: ghcr.io/matt-hurd/{arch}-autocorrect
+  typesense:
+    repository: matt-hurd/ha-autocorrect
+    target: typesense
+    image: ghcr.io/matt-hurd/{arch}-typesense
