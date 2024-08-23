@@ -1,9 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bashio
 set -e
 
-if [ -r .env ]; then
-    . .env
-fi
+jq -r 'to_entries[] | "\(.key | ascii_upcase)=\(.value)"' /data/options.json > config.env
 
 # Log level - acceptable values are debug, info, warning, error, critical. Suggest info or debug.
 LOG_LEVEL=${LOG_LEVEL:-info}
@@ -17,9 +15,9 @@ if [ "$RUN_MODE" == "dev" ]; then
     LOG_LEVEL="debug"
     uvicorn wac:app --host 0.0.0.0 --port 9000 --reload --log-config /usr/share/autocorrect/uvicorn-log-config.json \
         --log-level "$LOG_LEVEL" --loop uvloop --timeout-graceful-shutdown 5 \
-        --no-server-header
+        --no-server-header --env-file config.env
 else
     uvicorn wac:app --host 0.0.0.0 --port 9000 --log-config /usr/share/autocorrect/uvicorn-log-config.json \
         --log-level "$LOG_LEVEL" --loop uvloop --timeout-graceful-shutdown 5 \
-        --no-server-header
+        --no-server-header --env-file config.env
 fi

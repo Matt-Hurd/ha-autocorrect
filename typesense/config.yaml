@@ -12,4 +12,3 @@ ports:
   8108/tcp: 8108
 ports_description:
   8108/tcp: API
-image: "ghcr.io/matt-hurd/{arch}-typesense"

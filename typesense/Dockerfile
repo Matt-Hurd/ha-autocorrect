@@ -1,17 +1,20 @@
 
 ARG BUILD_FROM
-FROM typesense/typesense:0.25.2 AS source
-
 FROM $BUILD_FROM
 
 ARG BUILD_ARCH
 
-COPY --from=source /opt/typesense-server /opt/typesense-server
-RUN chmod +x /opt/typesense-server
+ARG TYPESENSE_VER="0.25.2"
 
-RUN apk add --no-cache ca-certificates
+RUN apt install curl tar
+
+RUN curl -LO https://dl.typesense.org/releases/${TYPESENSE_VER}/typesense-server-${TYPESENSE_VER}-linux-${BUILD_ARCH}.tar.gz && \
+    tar xfz typesense-server-${TYPESENSE_VER}-linux-${BUILD_ARCH}.tar.gz && \
+    mv typesense-server /opt/typesense-server && \
+    rm typesense-server-${TYPESENSE_VER}-linux-${BUILD_ARCH}.tar.gz
+
+RUN chmod +x /opt/typesense-server
 
 EXPOSE 8108
 
-HEALTHCHECK \
-    CMD curl http://localhost:8108/health
+CMD /opt/typesense-server --data-dir /data --api-key testing

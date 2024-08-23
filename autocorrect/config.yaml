@@ -12,9 +12,8 @@ ports:
   9000/tcp: 2971
 ports_description:
   9000/tcp: API
-image: "ghcr.io/matt-hurd/{arch}-autocorrect"
 options:
-  typesense_host: 127.0.0.1
+  typesense_host: local_typesense
   typesense_port: 8108
 schema:
   typesense_host: str
