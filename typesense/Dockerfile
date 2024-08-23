@@ -14,4 +14,4 @@ RUN apk add --no-cache ca-certificates
 EXPOSE 8108
 
 HEALTHCHECK \
-    CMD /opt/typesense-server
+    CMD curl http://localhost:8108/health

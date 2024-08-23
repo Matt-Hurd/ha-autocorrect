@@ -18,6 +18,3 @@ RUN --mount=type=cache,target=/root/.cache pip install --break-system-packages -
 COPY rootfs /
 
 EXPOSE 9000
-
-HEALTHCHECK \
-    CMD /usr/bin/entrypoint.sh
