@@ -15,11 +15,11 @@ set -a
 if [ "$RUN_MODE" == "dev" ]; then
     echo "Running in dev mode. Make sure you have Typesense started on host!"
     LOG_LEVEL="debug"
-    uvicorn wac:app --host 0.0.0.0 --port 9000 --reload --log-config uvicorn-log-config.json \
+    uvicorn wac:app --host 0.0.0.0 --port 9000 --reload --log-config /etc/ha-autocorrect.d/uvicorn-log-config.json \
         --log-level "$LOG_LEVEL" --loop uvloop --timeout-graceful-shutdown 5 \
         --no-server-header
 else
-    uvicorn wac:app --host 0.0.0.0 --port 9000 --log-config uvicorn-log-config.json \
+    uvicorn wac:app --host 0.0.0.0 --port 9000 --log-config /etc/ha-autocorrect.d/uvicorn-log-config.json \
         --log-level "$LOG_LEVEL" --loop uvloop --timeout-graceful-shutdown 5 \
         --no-server-header
 fi
