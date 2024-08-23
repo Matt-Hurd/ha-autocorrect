@@ -3,18 +3,16 @@ name: Assist Autocorrect
 version: dev
 slug: assist-autocorrect
 description: Simple & Free Autocomplete for Assist
-url: https://github.com/matt-hurd/ha-autocorrect/tree/main/ha-autocorrect
+url: https://github.com/matt-hurd/ha-autocorrect/tree/main/assist-autocorrect
 init: false
 arch:
   - aarch64
   - amd64
-map:
-  - ssl
 ports:
   9000/tcp: 2971
 ports_description:
   9000/tcp: API
-image: "ghcr.io/matt-hurd/{arch}-ha-autocorrect"
+image: "ghcr.io/matt-hurd/{arch}-assist-autocorrect"
 options:
   typesense_host: 127.0.0.1
   typesense_port: 8108
