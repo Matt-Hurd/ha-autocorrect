@@ -9,11 +9,6 @@ ARG BUILD_ARCH
 
 RUN apk add --no-cache coreutils curl python3 py3-pip
 
-WORKDIR /usr/local/sbin
-RUN curl -o typesense-server.tar.gz https://dl.typesense.org/releases/${TYPESENSE_VER}/typesense-server-${TYPESENSE_VER}-linux-${BUILD_ARCH}.tar.gz && \
-    tar xf typesense-server.tar.gz && echo -n '  typesense-server' >> typesense-server.md5.txt \
-    md5sum -c typesense-server.md5.txt && rm typesense-server*.*
-
 WORKDIR /app
 
 COPY requirements.txt .

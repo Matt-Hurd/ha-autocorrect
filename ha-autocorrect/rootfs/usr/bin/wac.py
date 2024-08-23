@@ -11,11 +11,6 @@ from datetime import datetime
 from decouple import config
 import typesense
 
-# For typesense-server when not in dev mode
-import subprocess
-import threading
-import time
-
 HA_URL = config('HA_URL', default="http://homeassistant.local:8123", cast=str)
 HA_TOKEN = config('HA_TOKEN', default=None, cast=str)
 LOG_LEVEL = config('LOG_LEVEL', default="debug", cast=str).upper()
@@ -30,14 +25,6 @@ TYPESENSE_SLOW_TIMEOUT = config(
     'TYPESENSE_SLOW_TIMEOUT', default=120, cast=int)
 TYPESENSE_THREADS = config('TYPESENSE_THREADS', default=8, cast=int)
 TYPESENSE_TIMEOUT = config('TYPESENSE_TIMEOUT', default=1, cast=int)
-
-# "Prod" vs "dev"
-RUN_MODE = config(f'RUN_MODE', default="prod", cast=str)
-if RUN_MODE == "prod":
-    TYPESENSE_HOST = "127.0.0.1"
-    TYPESENSE_PORT = 8108
-    TYPESENSE_PROTOCOL = "http"
-
 
 # Provide user feedback for learned and corrected commands
 FEEDBACK = config(f'FEEDBACK', default=True, cast=bool)
@@ -166,25 +153,6 @@ def openai_chat(text, model=OPENAI_MODEL):
             log.info(f"OpenAI failed with '{e}")
     return response
 
-# Typesense
-
-
-def start_typesense():
-    def run(job):
-        proc = subprocess.Popen(job)
-        proc.wait()
-        return proc
-
-    # Fix this in prod to use some kind of unique/user provided/etc key. Not that big of a deal but...
-    job = ['/usr/local/sbin/typesense-server', '--data-dir=/app/data/ts',
-           f'--api-key={TYPESENSE_API_KEY}', '--log-dir=/dev/shm', f'--thread-pool-size={TYPESENSE_THREADS}']
-
-    # server thread will remain active as long as FastAPI thread is running
-    thread = threading.Thread(name='typesense-server',
-                              target=run, args=(job,), daemon=True)
-    thread.start()
-
-
 app = FastAPI(title="WAC Proxy",
               description="Willow Auto Correct REST Proxy",
               version="0.1",
@@ -287,11 +255,6 @@ def init_typesense():
 
 @app.on_event("startup")
 async def startup_event():
-    if RUN_MODE == "prod":
-        log.info('Starting Typesense')
-        start_typesense()
-        log.info('Typesense started. Waiting for ready...')
-        time.sleep(10)
     init_typesense()
 
 # Add HA entities

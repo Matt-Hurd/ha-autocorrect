@@ -16,6 +16,8 @@ ports_description:
   9000/tcp: API
 image: "ghcr.io/matt-hurd/{arch}-ha-autocorrect"
 options:
-  typesense_url: http://localhost:8108
+  typesense_host: 127.0.0.1
+  typesense_port: 8108
 schema:
-  typesense_url: string
+  typesense_host: string
+  typesense_port: integer
