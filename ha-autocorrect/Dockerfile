@@ -7,7 +7,7 @@ ARG TYPESENSE_VER
 # Install typesense-server with md5sum workaround
 ARG BUILD_ARCH
 
-RUN apk add --no-cache coreutils curl
+RUN apk add --no-cache coreutils curl python3 py3-pip
 
 WORKDIR /usr/local/sbin
 RUN curl -o typesense-server.tar.gz https://dl.typesense.org/releases/${TYPESENSE_VER}/typesense-server-${TYPESENSE_VER}-linux-${BUILD_ARCH}.tar.gz && \

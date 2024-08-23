@@ -1,6 +1,6 @@
 
 ARG BUILD_FROM
-FROM typesense/typesense:25.2 AS source
+FROM typesense/typesense:0.25.2 AS source
 
 FROM $BUILD_FROM
 
