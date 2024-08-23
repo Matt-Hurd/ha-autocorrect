@@ -8,7 +8,6 @@ init: false
 arch:
   - aarch64
   - amd64
-  - armv7
 ports:
   8108/tcp: 8108
 ports_description:
