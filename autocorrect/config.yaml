@@ -8,6 +8,8 @@ init: false
 arch:
   - aarch64
   - amd64
+homeassistant_api: true
+hassio_api: true
 ports:
   9000/tcp: 2971
 ports_description:

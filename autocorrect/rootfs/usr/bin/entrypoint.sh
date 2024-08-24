@@ -1,7 +1,9 @@
-#!/usr/bin/env bashio
+#!/usr/bin/with-contenv bashio
 set -e
 
 jq -r 'to_entries[] | "\(.key | ascii_upcase)=\(.value)"' /data/options.json > config.env
+# Add supervisor token to config.env from existing env var
+echo "SUPERVISOR_TOKEN=${SUPERVISOR_TOKEN}" >> config.env
 
 # Log level - acceptable values are debug, info, warning, error, critical. Suggest info or debug.
 LOG_LEVEL=${LOG_LEVEL:-info}

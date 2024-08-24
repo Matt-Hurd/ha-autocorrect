@@ -11,8 +11,8 @@ from datetime import datetime
 from decouple import config
 import typesense
 
-HA_URL = config('HA_URL', default="http://homeassistant.local:8123", cast=str)
-HA_TOKEN = config('HA_TOKEN', default=None, cast=str)
+HA_URL = config('HA_URL', default="http://supervisor/core", cast=str)
+SUPERVISOR_TOKEN = config('SUPERVISOR_TOKEN', default=None, cast=str)
 LOG_LEVEL = config('LOG_LEVEL', default="debug", cast=str).upper()
 TGI_URL = config(f'TGI_URL', default=None, cast=str)
 
@@ -30,7 +30,7 @@ TYPESENSE_TIMEOUT = config('TYPESENSE_TIMEOUT', default=1, cast=int)
 FEEDBACK = config(f'FEEDBACK', default=True, cast=bool)
 
 # HA
-HA_TOKEN = f'Bearer {HA_TOKEN}'
+HA_TOKEN = f'Bearer {SUPERVISOR_TOKEN}'
 
 # Default number of search results and attempts
 CORRECT_ATTEMPTS = config(
@@ -163,6 +163,7 @@ app = FastAPI(title="WAC Proxy",
 # Basic stuff we need
 ha_headers = {
     "Authorization": HA_TOKEN,
+    "content-type": "application/json",
 }
 
 # The real WAC MVP
